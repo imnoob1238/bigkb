@@ -11,10 +11,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin {
-    @Inject(method = "damage", at = @At("RETURN"))
+    @Inject(
+        method = "damage",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/entity/LivingEntity;takeKnockback(DDD)V",
+            shift = At.Shift.AFTER
+        )
+    )
     private void bigkb$extraKnockback(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         LivingEntity self = (LivingEntity) (Object) this;
-        if (!cir.getReturnValue() || self.getWorld().isClient) return;
+        if (self.getWorld().isClient) return;
         if (BigKnockback.strength <= 0) return;
         if (source.getAttacker() instanceof PlayerEntity p && source.getSource() == p) {
             self.takeKnockback(BigKnockback.strength * 0.5, p.getX() - self.getX(), p.getZ() - self.getZ());
