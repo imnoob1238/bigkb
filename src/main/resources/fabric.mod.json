@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "bigkb",
+  "version": "1.0.0",
+  "name": "Big Knockback",
+  "environment": "*",
+  "entrypoints": { "main": ["com.example.bigkb.BigKnockback"] },
+  "mixins": ["bigkb.mixins.json"],
+  "depends": { "fabricloader": ">=0.15.0", "minecraft": "1.20.4", "fabric-api": "*" }
+}
